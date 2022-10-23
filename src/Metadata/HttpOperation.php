@@ -68,6 +68,7 @@ class HttpOperation extends Operation
      * @param bool|null                                                       $serialize                      https://api-platform.com/docs/core/events/#the-event-system
      * @param mixed|null                                                      $provider
      * @param mixed|null                                                      $processor
+     * @param array|null                                                      $rateLimiterConfig
      */
     public function __construct(
         protected string $method = self::METHOD_GET,
@@ -143,7 +144,8 @@ class HttpOperation extends Operation
         ?string $name = null,
         $provider = null,
         $processor = null,
-        array $extraProperties = []
+        array $extraProperties = [],
+        protected readonly ?array $rateLimiterConfig = null,
     ) {
         $this->shortName = $shortName;
         $this->description = $description;
@@ -548,5 +550,10 @@ class HttpOperation extends Operation
         $self->queryParameterValidationEnabled = $queryParameterValidationEnabled;
 
         return $self;
+    }
+
+    public function getRateLimiterConfig(): ?array
+    {
+        return  $this->rateLimiterConfig;
     }
 }

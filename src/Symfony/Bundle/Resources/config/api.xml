@@ -170,5 +170,14 @@
         <service id="api_platform.error_listener" class="ApiPlatform\Symfony\EventListener\ErrorListener" parent="exception_listener">
             <argument key="$controller">api_platform.action.exception</argument>
         </service>
+
+        <service id="api_platform.rate_limit.cache" class="ApiPlatform\Symfony\RateLimit\ApiCacheStorage">
+            <argument type="service" id="cache.app" />
+        </service>
+
+        <service id="api_platform.rate_limit.factory" class="ApiPlatform\Symfony\RateLimit\ApiRateLimitFactory">
+            <argument type="service" id="api_platform.rate_limit.cache" />
+            <argument>null</argument>
+        </service>
     </services>
 </container>
